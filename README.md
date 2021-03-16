@@ -34,6 +34,7 @@ This image is customizable by these environmental variables:
 | **DEBIAN\_FRONTEND**  | *noninteractive*      | no                 | set frontent to use – default self-explaining  |
 | **START_CRON**        | *0*                   | if `cron` needed   | set to `1` if cron should be startet at boot of the container |
 | **CRON_PATH**         | */etc/cron.d/docker*  | no                 | path to default cron file that will be provided with the default crontab content, see below |
+| **APACHE_ADDITIONAL** |                       | yes                | additional configuration for apache – may be multiline content, but is no more Portainer-safe if multiline! |
 
 
 ## Installed Tools
