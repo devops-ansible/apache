@@ -85,6 +85,7 @@ docker-php-ext-install -j$(nproc) imap zip
 docker-php-ext-install -j$(nproc) exif
 docker-php-ext-install -j$(nproc) intl
 docker-php-ext-enable imagick
+docker-php-ext-install gd
 
 # install xdebug
 chmod a+x /usr/local/bin/docker-php-pecl-install
