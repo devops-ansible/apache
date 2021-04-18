@@ -28,6 +28,7 @@ apt-get -yq install -y --no-install-recommends \
         locales locales-all \
         cron \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
+        libldb-dev libldap2-dev \
 	    openssl pkg-config liblasso3 libapache2-mod-auth-mellon \
 	    libmagickwand-dev
 
@@ -79,6 +80,7 @@ docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_sqlite
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-install pgsql pdo_pgsql
 docker-php-ext-install calendar
+docker-php-ext-install ldap
 docker-php-ext-configure calendar
 docker-php-ext-configure imap --with-kerberos --with-imap-ssl
 docker-php-ext-install -j$(nproc) imap zip
