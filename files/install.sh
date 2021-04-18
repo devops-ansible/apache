@@ -28,8 +28,8 @@ apt-get -yq install -y --no-install-recommends \
         locales locales-all \
         cron \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
-	openssl pkg-config liblasso3 libapache2-mod-auth-mellon \
-	libmagickwand-dev
+	    openssl pkg-config liblasso3 libapache2-mod-auth-mellon \
+	    libmagickwand-dev
 
 pip install j2cli
 
@@ -59,7 +59,7 @@ EOF
 echo "$bash_alias" >> /etc/bash.bashrc
 
 # change user permissions
-chown -R $WORKINGUSER $( eval echo "~$WORKINGUSER" )
+chown -R "${WORKINGUSER}" $( eval echo "~${WORKINGUSER}" )
 
 # install composer
 chmod a+x /composer.sh
@@ -67,7 +67,7 @@ chmod a+x /composer.sh
 mv composer.phar /usr/local/bin/composer
 rm -f /composer.sh
 
-sudo -u$WORKINGUSER composer global require hirak/prestissimo
+sudo -u "${WORKINGUSER}" composer global require hirak/prestissimo
 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
 
@@ -106,7 +106,6 @@ sed -i 's/ServerTokens\ OS/ServerTokens Prod/' /etc/apache2/conf-enabled/securit
 a2enmod rewrite
 
 #install mod_auth_mellon metadata script
-git clone --depth 1 -b master https://github.com/latchset/mod_auth_mellon.git 
-cp mod_auth_mellon/mellon_create_metadata.sh /usr/bin/ 
-rm -rf mod_auth_mellon 
-
+git clone --depth 1 -b master https://github.com/latchset/mod_auth_mellon.git
+cp mod_auth_mellon/mellon_create_metadata.sh /usr/bin/
+rm -rf mod_auth_mellon
