@@ -1,6 +1,50 @@
 #!/usr/bin/env bash
 
 ###
+## chown function
+###
+docker_chown () {
+    old_dir=$(pwd)
+
+    usr_id=${1}
+    grp_id=${3}
+    path=${2}
+
+    user=$( getent passwd "${usr_id}" | cut -d: -f1 )
+
+    if [[ -d "${path}" ]]; then
+        # Path is a directory
+        cd "${path}"
+        chval="."
+    elif [[ -f "${path}" ]]; then
+        # Path is a file
+        chval="${path}"
+    else
+        if ! ( [ -z ${CHOWN_DEBUG+x} ] || [ $( echo "${CHOWN_DEBUG}" | tr '[:upper:]' '[:lower:]' ) != true ] ); then
+            echo "${path} is neither a file nor a directory – chown cannot be processed"
+        fi
+        return
+    fi
+
+    files_to_change=$( find "${chval}" ! -user "${user}" -print | wc -l )
+
+    if [ "${files_to_change}" -gt "0" ]; then
+        if [ -z ${CHOWN_DEBUG+x} ] || [ $( echo "${CHOWN_DEBUG}" | tr '[:upper:]' '[:lower:]' ) != true ]; then
+            chown -R "${usr_id}":"${grp_id}" "${chval}" &
+        else
+            echo "now running chown on ${path}"
+            chown -v -R "${usr_id}":"${grp_id}" "${chval}" &
+        fi
+    else
+        if ! ( [ -z ${CHOWN_DEBUG+x} ] || [ $( echo "${CHOWN_DEBUG}" | tr '[:upper:]' '[:lower:]' ) != true ] ); then
+            echo "chown is being skipped on ${path}"
+        fi
+    fi
+
+    cd "${old_dir}"
+}
+
+###
 ## configure Apache2
 ###
 
@@ -40,12 +84,12 @@ fi
 echo "Changing folder permissions for Apache workinguser ${WORKINGUSER} ..."
 HOME_FOLDER="$(eval echo ~$WORKINGUSER)"
 if [[ $APACHE_WORKDIR = "$HOME_FOLDER"* ]]; then
-    chown -R $WORKINGUSER:$WORKINGGROUP $HOME_FOLDER
+    docker_chown $WORKINGUSER:$WORKINGGROUP $HOME_FOLDER
 elif [[ $HOME_FOLDER = "$APACHE_WORKDIR"* ]]; then
-    chown -R $WORKINGUSER:$WORKINGGROUP $APACHE_WORKDIR
+    docker_chown $WORKINGUSER:$WORKINGGROUP $APACHE_WORKDIR
 else
-    chown -R $WORKINGUSER:$WORKINGGROUP $HOME_FOLDER
-    chown -R $WORKINGUSER:$WORKINGGROUP $APACHE_WORKDIR
+    docker_chown $WORKINGUSER:$WORKINGGROUP $HOME_FOLDER
+    docker_chown $WORKINGUSER:$WORKINGGROUP $APACHE_WORKDIR
 fi
 
 
@@ -73,7 +117,6 @@ if [ -e $host_timezone ]; then
     export LC_ALL="${SET_LOCALE}"
     export LANG="${SET_LOCALE}"
     export LANGUAGE="${SET_LOCALE}"
-
 fi
 
 
