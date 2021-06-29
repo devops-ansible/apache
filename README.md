@@ -22,6 +22,7 @@ This image is customizable by these environmental variables:
 | **YESWWW**            | false                 | yes                | Duplicate content has to be avoided – therefore a decision for containers delivering content of `www.domain.tld` and `domain.tld` has to be made which one should be the mainly used one. **YESWWW** will be overridden by **NOWWW** if both are true. |
 | **NOWWW**             | false                 | yes                | See **YESWWW** |
 | **HTTPS**             | true                  | yes                | relevant for **YESWWW** and **NOWWW** since config rules have to be adjusted. |
+| **PHPINI**            | `{}`                  | yes                | JSON-String of key value dictionary to define additional ini settings for `php.ini`, i.e. `{"post_max_size":"250M","upload_max_filesize":"250M"}` |
 | **SMTP\_HOST**        |                       | yes                | should be set to your smtp host, i.e. `mail.example.com` |
 | **SMTP\_PORT**        |                       | yes                | defaults to `587` |
 | **SMTP\_FROM**        |                       | yes                | should be set to your sending from address, i.e. `motiontool@example.com` |
