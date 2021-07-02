@@ -1,5 +1,5 @@
 ARG IMAGE=php
-ARG VERSION=7.4-apache
+ARG VERSION=8.0-apache
 FROM $IMAGE:$VERSION
 MAINTAINER Martin Winter
 
