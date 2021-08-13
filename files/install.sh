@@ -75,19 +75,20 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 # install php libraries
 pecl install mcrypt-1.0.1
 pecl install imagick
-docker-php-ext-install -j$(nproc) mysqli zip
-docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_sqlite
+pecl install mongodb
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-docker-php-ext-install pgsql pdo_pgsql
-docker-php-ext-install calendar
-docker-php-ext-install ldap
 docker-php-ext-configure calendar
 docker-php-ext-configure imap --with-kerberos --with-imap-ssl
+docker-php-ext-install -j$(nproc) mysqli zip
+docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_sqlite
 docker-php-ext-install -j$(nproc) imap zip
 docker-php-ext-install -j$(nproc) exif
 docker-php-ext-install -j$(nproc) intl
-docker-php-ext-enable imagick
+docker-php-ext-install pgsql pdo_pgsql
+docker-php-ext-install calendar
+docker-php-ext-install ldap
 docker-php-ext-install gd
+docker-php-ext-enable imagick
 
 # install xdebug
 chmod a+x /usr/local/bin/docker-php-pecl-install
