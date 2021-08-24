@@ -16,8 +16,8 @@ echo 'upgrade and install tools'
 apt-get update -q --fix-missing
 apt-get -yq upgrade
 apt-get -yq install -y --no-install-recommends \
-        python-setuptools python-pip python-pkg-resources \
-        python-jinja2 python-yaml \
+        python3-setuptools python3-pip python3-pkg-resources \
+        python3-jinja2 python3-yaml \
         vim nano \
         htop tree tmux screen sudo git zsh ssh screen \
         supervisor expect \
