@@ -20,8 +20,8 @@ apt-get -yq upgrade
 echo
 echo -e '\033[1;30;42m install needed tools \033[0m'
 apt-get -yq install -y --no-install-recommends \
-        python-setuptools python-pip python-pkg-resources \
-        python-jinja2 python-yaml \
+        python3-setuptools python3-pip python3-pkg-resources \
+        python3-jinja2 python3-yaml \
         vim nano \
         htop tree tmux screen sudo git zsh ssh screen \
         supervisor expect \
@@ -35,8 +35,9 @@ apt-get -yq install -y --no-install-recommends \
         cron \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
         libldb-dev libldap2-dev \
-        openssl pkg-config liblasso3 libapache2-mod-auth-mellon \
+        openssl pkg-config liblasso3 \
         libmagickwand-dev
+        # libapache2-mod-auth-mellon
 
 pip install j2cli
 
@@ -123,7 +124,7 @@ sed -i 's/ServerTokens\ OS/ServerTokens Prod/' /etc/apache2/conf-enabled/securit
 # enable php modules
 a2enmod rewrite
 
-#install mod_auth_mellon metadata script
-git clone --depth 1 -b master https://github.com/latchset/mod_auth_mellon.git
-cp mod_auth_mellon/mellon_create_metadata.sh /usr/bin/
-rm -rf mod_auth_mellon
+# #install mod_auth_mellon metadata script
+# git clone --depth 1 -b master https://github.com/latchset/mod_auth_mellon.git
+# cp mod_auth_mellon/mellon_create_metadata.sh /usr/bin/
+# rm -rf mod_auth_mellon

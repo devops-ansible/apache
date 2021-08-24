@@ -158,6 +158,9 @@ if ! [ -z "$MODS" ] ; then
     echo "Enabling mods defined in \$MODS ..."
     for i in $MODS ; do
         a2enmod $i
+        if [[ $? != 0 ]]; then
+            docker-php-ext-enable $i
+        fi
     done
 fi | grep -q "service apache2 restart" && service apache2 restart
 
