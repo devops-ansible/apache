@@ -7,12 +7,18 @@ mv /entrypoint              /usr/local/bin/
 mv /docker-php-pecl-install /usr/local/bin/
 
 # upgrade and install applets and services
-apt-get update
+echo
+echo -e '\033[1;30;42m fetch apt cache and install helpers \033[0m'
+apt-get update -q --fix-missing
 apt-get -yq install -y --no-install-recommends \
         software-properties-common procps apt-utils
 
-apt-get update -q --fix-missing
+echo
+echo -e '\033[1;30;42m upgrade all installed \033[0m'
 apt-get -yq upgrade
+
+echo
+echo -e '\033[1;30;42m install needed tools \033[0m'
 apt-get -yq install -y --no-install-recommends \
         python-setuptools python-pip python-pkg-resources \
         python-jinja2 python-yaml \
@@ -29,13 +35,16 @@ apt-get -yq install -y --no-install-recommends \
         cron \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
         libldb-dev libldap2-dev \
-	    openssl pkg-config liblasso3 libapache2-mod-auth-mellon \
-	    libmagickwand-dev
+        openssl pkg-config liblasso3 libapache2-mod-auth-mellon \
+        libmagickwand-dev
 
 pip install j2cli
 
-curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 apt-get install -y nodejs
+
+echo
+echo -e '\033[1;30;42m defining aliases \033[0m'
 
 # add aliases
 read -d '' bash_alias << 'EOF'
@@ -62,6 +71,9 @@ echo "$bash_alias" >> /etc/bash.bashrc
 # change user permissions
 chown -R "${WORKINGUSER}" $( eval echo "~${WORKINGUSER}" )
 
+echo
+echo -e '\033[1;30;42m installing composer \033[0m'
+
 # install composer
 chmod a+x /composer.sh
 /bin/sh /composer.sh
@@ -71,6 +83,9 @@ rm -f /composer.sh
 sudo -u "${WORKINGUSER}" composer global require hirak/prestissimo
 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
+
+echo
+echo -e '\033[1;30;42m installing Apache things \033[0m'
 
 # install php libraries
 pecl install mcrypt-1.0.1
