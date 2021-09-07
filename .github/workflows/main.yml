@@ -46,6 +46,7 @@ jobs:
           no-cache: true
           context: ./php7/
           file: ./php7/Dockerfile
+          platforms: linux/amd64,linux/arm64
 
       - name: Image digest PHP7
         run: echo ${{ steps.docker_build_7.outputs.digest }}
@@ -70,6 +71,7 @@ jobs:
           no-cache: true
           context: ./php8/
           file: ./php8/Dockerfile
+          platforms: linux/amd64,linux/arm64
 
       - name: Image digest PHP8
         run: echo ${{ steps.docker_build_8.outputs.digest }}
