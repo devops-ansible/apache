@@ -85,8 +85,6 @@ jobs:
           commit_message: Last built
           commit_user_name: GitHub Actions
           commit_user_email: dev@macwinnie.me
-          repository: ./php7/
-
-
+          repository: ./php8/
 
 ...
