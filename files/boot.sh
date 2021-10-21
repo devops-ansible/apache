@@ -162,7 +162,7 @@ if ! [ -z "$MODS" ] ; then
             docker-php-ext-enable $i
         fi
     done
-fi | grep -q "service apache2 restart" && service apache2 restart
+fi
 
 
 ###
