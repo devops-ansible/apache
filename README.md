@@ -13,13 +13,13 @@ This image is customizable by these environmental variables:
 
 | env                   | default               | change recommended | description |
 | --------------------- | --------------------- |:------------------:| ----------- |
-| **PHP_TIMEZONE**      | *"Europe/Berlin"*     | yes                | timezone-file to use as default – can be one value selected out of `/usr/share/zoneinfo/`, i.e. `<region>/<city>` |
+| **PHP\_TIMEZONE**      | *"Europe/Berlin"*     | yes                | timezone-file to use as default – can be one value selected out of `/usr/share/zoneinfo/`, i.e. `<region>/<city>` |
 | **APACHE\_WORKDIR**   | */var/www/html*       | yes                | home folder of apache web application |
 | **APACHE\_LOG\_DIR**  | */var/log/apache2*    | yes                | folder for log files of apache |
 | **APACHE\_PUBLIC\_DIR** | **$APACHE\_WORKDIR** | yes               | folder used within apache configuration to be published – can be usefull if i.e. subfolder `public` of webproject should be exposed. Should regularly be child of `APACHE_WORKDIR`. |
-| **PHP_XDEBUG**        | *0*                   | yes                | You can use this to enable xdebug. start-apache2 script will enable xdebug if **PHP_XDEBUG** is set to *1* |
+| **PHP\_XDEBUG**        | *0*                   | yes                | You can use this to enable xdebug. start-apache2 script will enable xdebug if **PHP_XDEBUG** is set to *1* |
 | **MODS**              |                       | no                 | space separated list of PHP modules to be enabled on boot – modules have to be installed (i.e. through a special bootup script within `/boot.d/`-folder) |
-| **YESWWW**            | false                 | yes                | Duplicate content has to be avoided – therefore a decision for containers delivering content of `www.domain.tld` and `domain.tld` has to be made which one should be the mainly used one. **YESWWW** will be overridden by **NOWWW** if both are true. |
+| **YESWWW**            | false                 | yes                | Duplicate content has to be avoided – therefore a decision for containers delivering content of `www.domain.tld` and `domain.tld` has to be made which one should be the mainly used one. **YESWWW** will be overridden by **NOWWW** if both are true. |
 | **NOWWW**             | false                 | yes                | See **YESWWW** |
 | **HTTPS**             | true                  | yes                | relevant for **YESWWW** and **NOWWW** since config rules have to be adjusted. |
 | **PHPINI**            | `{}`                  | yes                | JSON-String of key value dictionary to define additional ini settings for `php.ini`, i.e. `{"post_max_size":"250M","upload_max_filesize":"250M"}` |
@@ -31,11 +31,11 @@ This image is customizable by these environmental variables:
 | **WORKINGUSER**       | *www-data*            | no                 | user that works as apache user – not implemented changable |
 | **TERM**              | *xterm*               | no                 | set terminal type – default *xterm* provides 16 colors |
 | **DEBIAN\_FRONTEND**  | *noninteractive*      | no                 | set frontent to use – default self-explaining  |
-| **START_CRON**        | *0*                   | if `cron` needed   | set to `1` if cron should be startet at boot of the container |
-| **CRON_PATH**         | */etc/cron.d/docker*  | no                 | path to default cron file that will be provided with the default crontab content, see below |
-| **APACHE_ADDITIONAL** |                       | yes                | additional configuration for apache – may be multiline content, but is no more Portainer-safe if multiline! |
-| **DISABLE_CHOWN**     |                       | no                 | disable the user change for all files in `$HOME` of `WORKINGUSER` and `APACHE_WORKDIR`. |
-| **CHOWN_DEBUG**       |                       | no                 | will output debug messages while running chown |
+| **START\_CRON**        | *0*                   | if `cron` needed   | set to `1` if cron should be startet at boot of the container |
+| **CRON\_PATH**         | */etc/cron.d/docker*  | no                 | path to default cron file that will be provided with the default crontab content, see below |
+| **APACHE\_ADDITIONAL** |                       | yes                | additional configuration for apache – may be multiline content, but is no more Portainer-safe if multiline! |
+| **DISABLE\_CHOWN**     |                       | no                 | disable the user change for all files in `$HOME` of `WORKINGUSER` and `APACHE_WORKDIR`. |
+| **CHOWN\_DEBUG**       |                       | no                 | will output debug messages while running chown |
 
 
 ## Installed Tools
@@ -47,14 +47,14 @@ This image is customizable by these environmental variables:
 | **python-jinja2**, **j2cli** | used for template provisioning |
 | **python-yaml**, **python-paramiko** | provision Image for further provisioning via Ansible | **vim**, **nano**            | editors |
 | **python-httplib2**            | Small, fast HTTP client library for Python |
-| **python-keyczar**             | Toolkit for safe and simple cryptography |
+| **python-keyczar**             | Toolkit for safe and simple cryptography |
 | **htop**, **tree**, **tmux**, **screen**, **sudo**, **git**, **zsh**, **ssh**, **screen** | usefull ops tools – oh-my-zsh is installed further|
 | **supervisor**               | process manager that allows to manage long-running programs |
 | **gnupg**, **openssl**       | encryption tools |
-| **curl**, **wget**           | fetch remote content |
+| **curl**, **wget**           | fetch remote content |
 | **mysql-client**, **libpq-dev**, **postgresql-client**, **sqlite3**, **libsqlite3-dev** | install database things – except of SQLite3 no real database is installed since full databases should run at least on a separate container |
 | **libkrb5-dev**, **libc-client-dev** | devtools especially for email |
-| **zlib1g-dev**               | compression library |
+| **zlib1g-dev**               | compression library |
 | **libfreetype6-dev**, **libjpeg62-turbo-dev**, **libmcrypt-dev**, **libpng-dev** | simplify working with and on images |
 | **nodejs**                   | javascript development tools |
 | **composer**                 | php package manager |
@@ -170,4 +170,4 @@ This Repository is Creative Commons non Commercial - You can contribute by forki
 
 ## last built
 
-2021-11-15 01:00:24
+2021-11-15 02:35:39
