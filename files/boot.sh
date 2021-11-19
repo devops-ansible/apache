@@ -4,6 +4,14 @@
 ## chown function
 ###
 docker_chown () {
+
+    if ! ( [ -z ${DISABLE_CHOWN+x} ] || [ $( echo "${DISABLE_CHOWN}" | tr '[:upper:]' '[:lower:]' ) != true ] ); then
+        if ! ( [ -z ${CHOWN_DEBUG+x} ] || [ $( echo "${CHOWN_DEBUG}" | tr '[:upper:]' '[:lower:]' ) != true ] ); then
+            echo 'Skipping CHOWN due to env variable `DISABLE_CHOWN` being set `True`!'
+        fi
+        return 0
+    fi
+
     old_dir=$(pwd)
 
     usr_id=${1}
@@ -84,12 +92,12 @@ fi
 echo "Changing folder permissions for Apache workinguser ${WORKINGUSER} ..."
 HOME_FOLDER="$(eval echo ~$WORKINGUSER)"
 if [[ $APACHE_WORKDIR = "$HOME_FOLDER"* ]]; then
-    docker_chown $WORKINGUSER:$WORKINGGROUP $HOME_FOLDER
+    docker_chown $( id -u "${WORKINGUSER}" ) "${HOME_FOLDER}"   $( id -g "${WORKINGGROUP}" )
 elif [[ $HOME_FOLDER = "$APACHE_WORKDIR"* ]]; then
-    docker_chown $WORKINGUSER:$WORKINGGROUP $APACHE_WORKDIR
+    docker_chown $( id -u "${WORKINGUSER}" ) "${APACHE_WORKDIR}"   $( id -g "${WORKINGGROUP}" )
 else
-    docker_chown $WORKINGUSER:$WORKINGGROUP $HOME_FOLDER
-    docker_chown $WORKINGUSER:$WORKINGGROUP $APACHE_WORKDIR
+    docker_chown $( id -u "${WORKINGUSER}" ) "${HOME_FOLDER}"   $( id -g "${WORKINGGROUP}" )
+    docker_chown $( id -u "${WORKINGUSER}" ) "${APACHE_WORKDIR}"   $( id -g "${WORKINGGROUP}" )
 fi
 
 
@@ -162,7 +170,7 @@ if ! [ -z "$MODS" ] ; then
             docker-php-ext-enable $i
         fi
     done
-fi | grep -q "service apache2 restart" && service apache2 restart
+fi
 
 
 ###
