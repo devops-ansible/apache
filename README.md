@@ -16,7 +16,7 @@ This image is customizable by these environmental variables:
 | **PHP_TIMEZONE**      | *"Europe/Berlin"*     | yes                | timezone-file to use as default – can be one value selected out of `/usr/share/zoneinfo/`, i.e. `<region>/<city>` |
 | **APACHE\_WORKDIR**   | */var/www/html*       | yes                | home folder of apache web application |
 | **APACHE\_LOG\_DIR**  | */var/log/apache2*    | yes                | folder for log files of apache |
-| **APACHE\_PUBLIC\_DIR** | **$APACHE\_WORKDIR** | yes               | folder used within apache configuration to be published – can be usefull if i.e. subfolder `public` of webproject should be exposed |
+| **APACHE\_PUBLIC\_DIR** | **$APACHE\_WORKDIR** | yes               | folder used within apache configuration to be published – can be usefull if i.e. subfolder `public` of webproject should be exposed. Should regularly be child of `APACHE_WORKDIR`. |
 | **PHP_XDEBUG**        | *0*                   | yes                | You can use this to enable xdebug. start-apache2 script will enable xdebug if **PHP_XDEBUG** is set to *1* |
 | **MODS**              |                       | no                 | space separated list of PHP modules to be enabled on boot – modules have to be installed (i.e. through a special bootup script within `/boot.d/`-folder) |
 | **YESWWW**            | false                 | yes                | Duplicate content has to be avoided – therefore a decision for containers delivering content of `www.domain.tld` and `domain.tld` has to be made which one should be the mainly used one. **YESWWW** will be overridden by **NOWWW** if both are true. |
@@ -34,6 +34,8 @@ This image is customizable by these environmental variables:
 | **START_CRON**        | *0*                   | if `cron` needed   | set to `1` if cron should be startet at boot of the container |
 | **CRON_PATH**         | */etc/cron.d/docker*  | no                 | path to default cron file that will be provided with the default crontab content, see below |
 | **APACHE_ADDITIONAL** |                       | yes                | additional configuration for apache – may be multiline content, but is no more Portainer-safe if multiline! |
+| **DISABLE_CHOWN**     |                       | no                 | disable the user change for all files in `$HOME` of `WORKINGUSER` and `APACHE_WORKDIR`. |
+| **CHOWN_DEBUG**       |                       | no                 | will output debug messages while running chown |
 
 
 ## Installed Tools
