@@ -36,7 +36,8 @@ apt-get -yq install -y --no-install-recommends \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
         libldb-dev libldap2-dev \
         openssl pkg-config liblasso3 \
-        libmagickwand-dev
+        libmagickwand-dev \
+        libcurl4-openssl-dev libonig-dev
         # libapache2-mod-auth-mellon
 
 pip install j2cli
@@ -100,6 +101,7 @@ docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_sqlite
 docker-php-ext-install -j$(nproc) imap zip
 docker-php-ext-install -j$(nproc) exif
 docker-php-ext-install -j$(nproc) intl
+docker-php-ext-install -j$(nproc) curl mbstring opcache
 docker-php-ext-install pgsql pdo_pgsql
 docker-php-ext-install calendar
 docker-php-ext-install ldap
