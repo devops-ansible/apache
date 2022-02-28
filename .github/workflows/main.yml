@@ -47,6 +47,13 @@ jobs:
           context: ./php7/
           file: ./php7/Dockerfile
           platforms: linux/amd64,linux/arm64
+          
+      - name: "Push re-tagged PHP7 image"
+        uses: "akhilerm/tag-push-action@v2.0.0"
+        with:
+          src: "devopsansiblede/apache:latest"
+          dst: |
+            devopsansiblede/apache:php7
 
       - name: Image digest PHP7
         run: echo ${{ steps.docker_build_7.outputs.digest }}
