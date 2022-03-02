@@ -96,17 +96,19 @@ pecl install mongodb
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-configure calendar
 docker-php-ext-configure imap --with-kerberos --with-imap-ssl
-docker-php-ext-install -j$(nproc) mysqli zip
-docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_sqlite
-docker-php-ext-install -j$(nproc) imap zip
-docker-php-ext-install -j$(nproc) exif
-docker-php-ext-install -j$(nproc) intl
-docker-php-ext-install -j$(nproc) curl mbstring opcache
-docker-php-ext-install pgsql pdo_pgsql
-docker-php-ext-install calendar
-docker-php-ext-install ldap
-docker-php-ext-install gd
-docker-php-ext-enable imagick
+docker-php-ext-configure gd --with-freetype --with-jpeg
+docker-php-ext-install -j$( nproc ) \
+    mysqli zip \
+    pdo pdo_mysql pdo_sqlite \
+    imap zip \
+    exif \
+    intl \
+    curl mbstring opcache \
+    pgsql pdo_pgsql \
+    calendar \
+    ldap \
+    gd \
+    imagick
 
 # install xdebug
 chmod a+x /usr/local/bin/docker-php-pecl-install
