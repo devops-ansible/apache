@@ -9,7 +9,7 @@ on:
     - cron: '11 23 * * 0'
 
 jobs:
-  main:
+  php7:
     runs-on: ubuntu-latest
     steps:
 
@@ -24,12 +24,6 @@ jobs:
         with:
           ref: php7
           path: php7
-
-      - name: Checkout PHP8
-        uses: actions/checkout@v2
-        with:
-          ref: php8
-          path: php8
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -68,6 +62,28 @@ jobs:
           commit_user_name: GitHub Actions
           commit_user_email: dev@macwinnie.me
           repository: ./php7/
+
+  php8:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Checkout PHP8
+        uses: actions/checkout@v2
+        with:
+          ref: php8
+          path: php8
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       - name: Build and push PHP8
         id: docker_build_8
