@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # adjust executable rights and move files to correct places
 chmod a+x /boot.sh
 chmod a+x /entrypoint
@@ -36,8 +38,9 @@ apt-get -yq install -y --no-install-recommends \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
         libldb-dev libldap2-dev \
         openssl pkg-config liblasso3 \
-        libmagickwand-dev \
-        libcurl4-openssl-dev libonig-dev
+        libmagickwand-dev  libmagickcore-dev imagemagick \
+        libcurl4-openssl-dev libonig-dev \
+        dialog
         # libapache2-mod-auth-mellon
 
 pip install j2cli
@@ -47,6 +50,8 @@ apt-get install -y nodejs
 
 echo
 echo -e '\033[1;30;42m defining aliases \033[0m'
+
+set +e
 
 # add aliases
 read -d '' bash_alias << 'EOF'
@@ -68,6 +73,8 @@ alias la='ls -A'
 alias l='ls -CF'
 EOF
 
+set -e
+
 echo "$bash_alias" >> /etc/bash.bashrc
 
 # change user permissions
@@ -82,15 +89,13 @@ chmod a+x /composer.sh
 mv composer.phar /usr/local/bin/composer
 rm -f /composer.sh
 
-sudo -u "${WORKINGUSER}" composer global require hirak/prestissimo
-
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
 
 echo
 echo -e '\033[1;30;42m installing Apache things \033[0m'
 
 # install php libraries
-pecl install mcrypt-1.0.1
+pecl install mcrypt-1.0.4
 pecl install imagick
 pecl install mongodb
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
@@ -107,7 +112,9 @@ docker-php-ext-install -j$( nproc ) \
     pgsql pdo_pgsql \
     calendar \
     ldap \
-    gd \
+    gd
+
+docker-php-ext-enable \
     imagick
 
 # install xdebug
