@@ -89,8 +89,6 @@ chmod a+x /composer.sh
 mv composer.phar /usr/local/bin/composer
 rm -f /composer.sh
 
-sudo -u "${WORKINGUSER}" composer global require hirak/prestissimo
-
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
 
 echo
