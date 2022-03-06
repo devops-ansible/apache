@@ -39,7 +39,8 @@ apt-get -yq install -y --no-install-recommends \
         libldb-dev libldap2-dev \
         openssl pkg-config liblasso3 \
         libmagickwand-dev  libmagickcore-dev imagemagick \
-        libcurl4-openssl-dev libonig-dev
+        libcurl4-openssl-dev libonig-dev \
+        dialog
         # libapache2-mod-auth-mellon
 
 pip install j2cli
@@ -49,6 +50,8 @@ apt-get install -y nodejs
 
 echo
 echo -e '\033[1;30;42m defining aliases \033[0m'
+
+set +e
 
 # add aliases
 read -d '' bash_alias << 'EOF'
@@ -69,6 +72,8 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 EOF
+
+set -e
 
 echo "$bash_alias" >> /etc/bash.bashrc
 
@@ -109,7 +114,9 @@ docker-php-ext-install -j$( nproc ) \
     pgsql pdo_pgsql \
     calendar \
     ldap \
-    gd \
+    gd
+
+docker-php-ext-enable \
     imagick
 
 # install xdebug
