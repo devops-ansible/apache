@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # adjust executable rights and move files to correct places
 chmod a+x /boot.sh
 chmod a+x /entrypoint
@@ -36,7 +38,7 @@ apt-get -yq install -y --no-install-recommends \
         libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng-dev libzip-dev libicu-dev \
         libldb-dev libldap2-dev \
         openssl pkg-config liblasso3 \
-        libmagickwand-dev \
+        libmagickwand-dev  libmagickcore-dev imagemagick \
         libcurl4-openssl-dev libonig-dev
         # libapache2-mod-auth-mellon
 
