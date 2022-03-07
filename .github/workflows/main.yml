@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
   schedule:
-    - cron: '11 23 * * 0'
+    - cron: '11 21 * * 0'
 
 jobs:
   php7:
