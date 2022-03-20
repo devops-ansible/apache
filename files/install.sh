@@ -95,7 +95,8 @@ echo
 echo -e '\033[1;30;42m installing Apache things \033[0m'
 
 # install php libraries
-pecl install mcrypt-1.0.4
+# # mcrypt-1.0.4 only supports PHP8 until 8.1.0 ...
+# pecl install mcrypt-1.0.4
 pecl install imagick
 pecl install mongodb
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
