@@ -237,18 +237,18 @@ fi
 ## enable differentiation of environments by setting ENV environmental variable
 ###
 
-if [ "$ENV" = "dev" ]; then
-    echo Using PHP production mode
-else
+if [ ! -z ${ENV+x} ] && [ "${ENV}" = "dev" ]; then
     echo Using PHP development mode
     echo "error_reporting = E_ERROR | E_WARNING | E_PARSE" > /usr/local/etc/php/conf.d/php.ini
     echo "display_errors = On" >> /usr/local/etc/php/conf.d/php.ini
+else
+    echo Using PHP production mode
 fi
 
 ###
 ## php.ini enhancements
 ###
-if [ "$PHPINI" != "" ]; then
+if [ ! -z ${PHPINI+x} ] && [ "$PHPINI" != "" ]; then
     initscript="/boot.d/inibuild.php"
     chmod a+x ${initscript}
     ${initscript} $PHPINI >> /usr/local/etc/php/conf.d/php_env.ini
