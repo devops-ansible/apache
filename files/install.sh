@@ -24,7 +24,7 @@ echo -e '\033[1;30;42m install needed tools \033[0m'
 apt-get -yq install -y --no-install-recommends \
         python3-setuptools python3-pip python3-pkg-resources \
         python3-jinja2 python3-yaml \
-        vim nano \
+        vim nano less \
         htop tree tmux screen sudo git zsh ssh screen \
         supervisor expect \
         gnupg openssl \
