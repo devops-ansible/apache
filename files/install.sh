@@ -119,7 +119,7 @@ docker-php-ext-enable \
 
 # install xdebug
 chmod a+x /usr/local/bin/docker-php-pecl-install
-docker-php-pecl-install xdebug
+docker-php-pecl-install xdebug-3.1.6
 rm ${PHP_INI_DIR}/conf.d/docker-php-pecl-xdebug.ini
 
 # perform installation cleanup
