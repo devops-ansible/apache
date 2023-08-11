@@ -39,6 +39,8 @@ This image is customizable by these environmental variables:
 | **CRON\_PATH**         | */etc/cron.d/docker*  | no                 | path to default cron file that will be provided with the default crontab content, see below |
 | **APACHE\_ADDITIONAL** |                       | yes                | additional configuration for apache – may be multiline content, but is no more Portainer-safe if multiline! |
 | **DISABLE\_CHOWN**     |                       | no                 | disable the user change for all files in `$HOME` of `WORKINGUSER` and `APACHE_WORKDIR`. |
+| **WWW\_UID**           |                       | no                 | change `www-data` UID |
+| **WWW\_GID**           |                       | no                 | change `www-data` GID |
 | **CHOWN\_DEBUG**       |                       | no                 | will output debug messages while running chown |
 
 

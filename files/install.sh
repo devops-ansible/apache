@@ -22,7 +22,7 @@ apt-get -yq upgrade
 echo
 echo -e '\033[1;30;42m install needed tools \033[0m'
 apt-get -yq install -y --no-install-recommends \
-        python3-setuptools python3-pip python3-pkg-resources \
+        python3-setuptools python3-pip python3-pkg-resources pipx \
         python3-jinja2 python3-yaml \
         vim nano less \
         htop tree tmux screen sudo git zsh ssh screen \
@@ -43,7 +43,11 @@ apt-get -yq install -y --no-install-recommends \
         dialog
         # libapache2-mod-auth-mellon
 
-pip install j2cli
+pipx ensurepath
+pipx install j2cli
+chown -R ${WORKINGUSER} $( eval echo ~${WORKINGUSER} )
+sudo -u${WORKINGUSER} pipx ensurepath
+sudo -u${WORKINGUSER} pipx install j2cli
 
 curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 apt-get install -y nodejs
