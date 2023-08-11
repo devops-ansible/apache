@@ -1,4 +1,8 @@
 # Apache Base Image
+
+[!WARNING]
+Since PHP 7.4 reached EOL in January 2023, the default branch of this Apache Repo is changed in August 2023 to PHP8 – and so the `latest` tag will contain PHP 8 instead of PHP 7 ... the `php7` tag will contain the PHP 7 version in future still.
+
 ## Provisioned by devops-ansible.de
 
 Base-usage is to provide a as far as possible customizable Apache Webserver for (almost) every PHP-Application.
