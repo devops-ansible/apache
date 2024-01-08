@@ -13,7 +13,7 @@ echo
 echo -e '\033[1;30;42m fetch apt cache and install helpers \033[0m'
 apt-get update -q --fix-missing
 apt-get -yq install -y --no-install-recommends \
-        software-properties-common procps apt-utils
+        software-properties-common procps apt-utils jq
 
 echo
 echo -e '\033[1;30;42m upgrade all installed \033[0m'
@@ -49,7 +49,10 @@ chown -R ${WORKINGUSER} $( eval echo ~${WORKINGUSER} )
 sudo -u${WORKINGUSER} pipx ensurepath
 sudo -u${WORKINGUSER} pipx install j2cli
 
-curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+node_line="(LTS)"
+# node_line="(Current)"
+node_version="$( curl -s https://api.github.com/repos/nodejs/node/releases | jq -r '[ .[] | select(.name | contains("'${node_line}'")) | .tag_name | split("v") | .[1] | split(".") | .[0] ] | sort | .[-1]' )"
+curl -sL "https://deb.nodesource.com/setup_${node_version}.x" | sudo bash -
 apt-get install -y nodejs
 
 echo
