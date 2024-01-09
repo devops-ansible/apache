@@ -17,26 +17,27 @@ This image is customizable by these environmental variables:
 
 | env                   | default               | change recommended | description |
 | --------------------- | --------------------- |:------------------:| ----------- |
-| **PHP\_TIMEZONE**      | *"Europe/Berlin"*     | yes                | timezone-file to use as default – can be one value selected out of `/usr/share/zoneinfo/`, i.e. `<region>/<city>` |
-| **APACHE\_WORKDIR**   | */var/www/html*       | yes                | home folder of apache web application |
-| **APACHE\_LOG\_DIR**  | */var/log/apache2*    | yes                | folder for log files of apache |
-| **APACHE\_PUBLIC\_DIR** | **$APACHE\_WORKDIR** | yes               | folder used within apache configuration to be published – can be usefull if i.e. subfolder `public` of webproject should be exposed. Should regularly be child of `APACHE_WORKDIR`. |
-| **PHP\_XDEBUG**        | *0*                   | yes                | You can use this to enable xdebug. start-apache2 script will enable xdebug if **PHP_XDEBUG** is set to *1* |
+| **NODE\_ENV**         | `production`          | yes                | Node environment definition – by this setting, `devDependencies` are not installed by running `npm install`. **FOR DEVELOPMENT** set to anything else than `production`! |
+| **PHP\_TIMEZONE**      | `Europe/Berlin`      | yes                | timezone-file to use as default – can be one value selected out of `/usr/share/zoneinfo/`, i.e. `<region>/<city>` |
+| **APACHE\_WORKDIR**   | `/var/www/html`       | yes                | home folder of apache web application |
+| **APACHE\_LOG\_DIR**  | `/var/log/apache2`    | yes                | folder for log files of apache |
+| **APACHE\_PUBLIC\_DIR** | `$APACHE_WORKDIR` | yes               | folder used within apache configuration to be published – can be usefull if i.e. subfolder `public` of webproject should be exposed. Should regularly be child of `APACHE_WORKDIR`. |
+| **PHP\_XDEBUG**       | `0`                   | yes                | You can use this to enable xdebug. start-apache2 script will enable xdebug if **PHP_XDEBUG** is set to *1* |
 | **MODS**              |                       | no                 | space separated list of PHP modules to be enabled on boot – modules have to be installed (i.e. through a special bootup script within `/boot.d/`-folder) |
-| **YESWWW**            | false                 | yes                | Duplicate content has to be avoided – therefore a decision for containers delivering content of `www.domain.tld` and `domain.tld` has to be made which one should be the mainly used one. **YESWWW** will be overridden by **NOWWW** if both are true. |
-| **NOWWW**             | false                 | yes                | See **YESWWW** |
-| **HTTPS**             | true                  | yes                | relevant for **YESWWW** and **NOWWW** since config rules have to be adjusted. |
+| **YESWWW**            | *false*               | yes                | Duplicate content has to be avoided – therefore a decision for containers delivering content of `www.domain.tld` and `domain.tld` has to be made which one should be the mainly used one. **YESWWW** will be overridden by **NOWWW** if both are true. |
+| **NOWWW**             | *false*               | yes                | See **YESWWW** |
+| **HTTPS**             | *true*                | yes                | relevant for **YESWWW** and **NOWWW** since config rules have to be adjusted. |
 | **PHPINI**            | `{}`                  | yes                | JSON-String of key value dictionary to define additional ini settings for `php.ini`, i.e. `{"post_max_size":"250M","upload_max_filesize":"250M"}` |
 | **SMTP\_HOST**        |                       | yes                | should be set to your smtp host, i.e. `mail.example.com` |
 | **SMTP\_PORT**        |                       | yes                | defaults to `587` |
 | **SMTP\_FROM**        |                       | yes                | should be set to your sending from address, i.e. `motiontool@example.com` |
 | **SMTP\_USER**        |                       | yes                | defaults to `SMTP_FROM` and has to be the user, you are authenticating on the **SMTP_HOST** |
 | **SMTP\_PASS**        |                       | yes                | should be set to your plaintext(!) smtp password, i.e. `I'm very Secr3t!` |
-| **WORKINGUSER**       | *www-data*            | no                 | user that works as apache user – not implemented changable |
-| **TERM**              | *xterm*               | no                 | set terminal type – default *xterm* provides 16 colors |
-| **DEBIAN\_FRONTEND**  | *noninteractive*      | no                 | set frontent to use – default self-explaining  |
-| **START\_CRON**        | *0*                   | if `cron` needed   | set to `1` if cron should be startet at boot of the container |
-| **CRON\_PATH**         | */etc/cron.d/docker*  | no                 | path to default cron file that will be provided with the default crontab content, see below |
+| **WORKINGUSER**       | `www-data`            | no                 | user that works as apache user – not implemented changable |
+| **TERM**              | `xterm`               | no                 | set terminal type – default *xterm* provides 16 colors |
+| **DEBIAN\_FRONTEND**  | `noninteractive`      | no                 | set frontent to use – default self-explaining  |
+| **START\_CRON**        | `0`                   | if `cron` needed   | set to `1` if cron should be startet at boot of the container |
+| **CRON\_PATH**         | `/etc/cron.d/docker`  | no                 | path to default cron file that will be provided with the default crontab content, see below |
 | **APACHE\_ADDITIONAL** |                       | yes                | additional configuration for apache – may be multiline content, but is no more Portainer-safe if multiline! |
 | **DISABLE\_CHOWN**     |                       | no                 | disable the user change for all files in `$HOME` of `WORKINGUSER` and `APACHE_WORKDIR`. |
 | **WWW\_UID**           |                       | no                 | change `www-data` UID |
@@ -62,7 +63,7 @@ This image is customizable by these environmental variables:
 | **libkrb5-dev**, **libc-client-dev** | devtools especially for email |
 | **zlib1g-dev**               | compression library |
 | **libfreetype6-dev**, **libjpeg62-turbo-dev**, **libmcrypt-dev**, **libpng-dev** | simplify working with and on images |
-| **nodejs**                   | javascript development tools |
+| **nodejs** + **npm**         | javascript development tools – LTS stream |
 | **composer**                 | php package manager |
 | **msmtp**, **msmtp-mta**     | simple and easy to use SMTP client replacing sendmail |
 | **cron**                     | recurring tasks – has to be activated by ENV variables |

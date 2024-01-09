@@ -20,6 +20,7 @@ ENV HTTPS true
 ENV COMPOSER_NO_INTERACTION 1
 ENV START_CRON 0
 ENV CRON_PATH /etc/cron.d/docker
+ENV NODE_ENV production
 
 # expose ports
 EXPOSE 80
