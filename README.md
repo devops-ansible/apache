@@ -18,6 +18,7 @@ This image is customizable by these environmental variables:
 | env                   | default               | change recommended | description |
 | --------------------- | --------------------- |:------------------:| ----------- |
 | **NODE\_ENV**         | `production`          | yes                | Node environment definition – by this setting, `devDependencies` are not installed by running `npm install`. **FOR DEVELOPMENT** set to anything else than `production`! |
+| **COMPOSER\_NO\_DEV** | `1`                   | yes                | analoguous to `NODE_ENV` this now defaults to a prod environment for `composer` installation |
 | **PHP\_TIMEZONE**      | `Europe/Berlin`      | yes                | timezone-file to use as default – can be one value selected out of `/usr/share/zoneinfo/`, i.e. `<region>/<city>` |
 | **APACHE\_WORKDIR**   | `/var/www/html`       | yes                | home folder of apache web application |
 | **APACHE\_LOG\_DIR**  | `/var/log/apache2`    | yes                | folder for log files of apache |
