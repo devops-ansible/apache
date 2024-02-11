@@ -7,7 +7,7 @@ if [ -f "${APACHE_WORKDIR}/composer.json" ]; then
     composer install
 fi
 
-if [ "${APACHE_PUBLIC_DIR}" != "${APACHE_WORKDIR}" ] && [ -f "${APACHE_PUBLIC_DIR}/" ]; then
+if [ "${APACHE_PUBLIC_DIR}" != "${APACHE_WORKDIR}" ] && [ -f "${APACHE_PUBLIC_DIR}/composer.json" ]; then
     # run composer install in public dir
     echo "Running composer installation within the Apache public directory ${APACHE_PUBLIC_DIR}"
     cd "${APACHE_PUBLIC_DIR}"
