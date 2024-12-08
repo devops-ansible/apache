@@ -102,18 +102,31 @@ echo
 echo -e '\033[1;30;42m installing Apache things \033[0m'
 
 # install php libraries
-# # mcrypt-1.0.4 only supports PHP8 until 8.1.0 ...
-# pecl install mcrypt-1.0.4
-pecl install imagick
+
+## imagick has currently a problem to be installed on php 8.3+
+# pecl install imagick
+## workaround
+curl -L https://api.github.com/repos/Imagick/imagick/tarball/master -o /tmp/imagick.tar
+mkdir /tmp/imagick
+tar xf /tmp/imagick.tar -C /tmp/imagick --strip-components=1
+rm -f /tmp/imagick.tar
+cur_dir=$( pwd )
+cd /tmp/imagick
+phpize
+./configure
+make
+make install
+cd ${cur_dir}
+
+# everything else of php libraries
 pecl install mongodb
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-configure calendar
-docker-php-ext-configure imap --with-kerberos --with-imap-ssl
 docker-php-ext-configure gd --with-freetype --with-jpeg
 docker-php-ext-install -j$( nproc ) \
     mysqli zip \
     pdo pdo_mysql pdo_sqlite \
-    imap zip \
+    zip \
     exif \
     intl \
     curl mbstring opcache \

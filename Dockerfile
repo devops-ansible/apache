@@ -1,5 +1,5 @@
 ARG IMAGE=php
-ARG VERSION=8.3-apache
+ARG VERSION=8-apache
 
 FROM $IMAGE:$VERSION
 
