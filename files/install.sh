@@ -120,6 +120,7 @@ cd ${cur_dir}
 
 # everything else of php libraries
 pecl install mongodb
+yes '' | pecl install imap
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-configure calendar
 docker-php-ext-configure gd --with-freetype --with-jpeg
