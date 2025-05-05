@@ -3,7 +3,7 @@ ARG VERSION=7.4-apache
 
 FROM $IMAGE:$VERSION
 
-MAINTAINER macwinnie <dev@macwinnie.me>
+LABEL org.opencontainers.image.authors="macwinnie <dev@macwinnie.me>"
 
 # environmental variables
 ENV TERM xterm
