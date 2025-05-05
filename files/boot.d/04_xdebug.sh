@@ -21,7 +21,7 @@ if [[ ${PHP_XDEBUG} != 0 ]]; then
         touch $xdebug_ini
     fi
 
-    j2 /templates/xdebug.j2 > $xdebug_ini
+    jinjanate /templates/xdebug.j2 > $xdebug_ini
 
 elif [[ -f "${xdebug_ini}" ]]; then
 

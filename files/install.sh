@@ -44,10 +44,10 @@ apt-get -yq install -y --no-install-recommends \
         # libapache2-mod-auth-mellon
 
 pipx ensurepath
-pipx install j2cli
+pipx install jinjanator
 chown -R ${WORKINGUSER} $( eval echo ~${WORKINGUSER} )
 sudo -u${WORKINGUSER} pipx ensurepath
-sudo -u${WORKINGUSER} pipx install j2cli
+sudo -u${WORKINGUSER} pipx install jinjanator
 
 node_line="(LTS)"
 # node_line="(Current)"
