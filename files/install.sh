@@ -99,7 +99,7 @@ echo -e '\033[1;30;42m installing Apache things \033[0m'
 # install php libraries
 pecl install mcrypt-1.0.4
 pecl install imagick
-pecl install mongodb
+pecl install mongodb-1.20.1
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-configure calendar
 docker-php-ext-configure imap --with-kerberos --with-imap-ssl
