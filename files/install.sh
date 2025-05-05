@@ -43,7 +43,9 @@ apt-get -yq install -y --no-install-recommends \
         dialog
         # libapache2-mod-auth-mellon
 
-pip install j2cli
+pip install jinjanator
+chown -R ${WORKINGUSER} $( eval echo ~${WORKINGUSER} )
+sudo -u${WORKINGUSER} pip install jinjanator
 
 curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
 apt-get install -y nodejs

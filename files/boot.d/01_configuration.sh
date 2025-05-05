@@ -5,7 +5,7 @@
 ###
 
 echo 'Writing Apache Config file from Template ...'
-j2 /templates/apache.j2 > /etc/apache2/sites-available/000-default.conf
+jinjanate /templates/apache.j2 > /etc/apache2/sites-available/000-default.conf
 
 ###
 ## write out SMTP data
@@ -13,7 +13,7 @@ j2 /templates/apache.j2 > /etc/apache2/sites-available/000-default.conf
 
 if [ ! -z ${SMTP_HOST+x} ] && [ ! -z ${SMTP_FROM+x} ] && [ ! -z ${SMTP_PASS+x} ]; then
     echo "Writing out /etc/msmtprc ..."
-    j2 /templates/msmtprc.j2 > /etc/msmtprc
+    jinjanate /templates/msmtprc.j2 > /etc/msmtprc
 fi
 
 ###
