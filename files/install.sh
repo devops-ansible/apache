@@ -13,7 +13,7 @@ echo
 echo -e '\033[1;30;42m fetch apt cache and install helpers \033[0m'
 apt-get update -q --fix-missing
 apt-get -yq install -y --no-install-recommends \
-        software-properties-common procps apt-utils jq
+        procps apt-utils jq
 
 echo
 echo -e '\033[1;30;42m upgrade all installed \033[0m'

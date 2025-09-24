@@ -50,7 +50,6 @@ This image is customizable by these environmental variables:
 
 | tool(s)                      | description |
 | ---------------------------- | ----------- |
-| **software-properties-common**, **procps** | simplify further installations |
 | **python-setuptools**, **python-pip**, **python-pkg-resources** | simplify python installations |
 | **python-jinja2**, **j2cli** | used for template provisioning |
 | **python-yaml**, **python-paramiko** | provision Image for further provisioning via Ansible | **vim**, **nano**            | editors |
