@@ -11,6 +11,7 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+pecl channel-update pecl.php.net
 pecl install "$@"
 
 while [ $# -gt 0 ]; do

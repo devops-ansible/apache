@@ -30,7 +30,6 @@ apt-get -yq install -y --no-install-recommends \
         gnupg openssl \
         curl wget unzip \
         default-mysql-client sqlite3 libsqlite3-dev libpq-dev \
-        libkrb5-dev libc-client-dev \
         zlib1g-dev \
         msmtp msmtp-mta \
         locales locales-all \
@@ -41,7 +40,6 @@ apt-get -yq install -y --no-install-recommends \
         libmagickwand-dev  libmagickcore-dev imagemagick \
         libcurl4-openssl-dev libonig-dev \
         dialog
-        # libapache2-mod-auth-mellon
 
 pipx ensurepath
 pipx install jinjanator
@@ -120,7 +118,6 @@ cd ${cur_dir}
 
 # everything else of php libraries
 pecl install mongodb
-yes '' | pecl install imap
 docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-configure calendar
 docker-php-ext-configure gd --with-freetype --with-jpeg

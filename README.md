@@ -60,7 +60,6 @@ This image is customizable by these environmental variables:
 | **gnupg**, **openssl**       | encryption tools |
 | **curl**, **wget**           | fetch remote content |
 | **mysql-client**, **libpq-dev**, **postgresql-client**, **sqlite3**, **libsqlite3-dev** | install database things – except of SQLite3 no real database is installed since full databases should run at least on a separate container |
-| **libkrb5-dev**, **libc-client-dev** | devtools especially for email |
 | **zlib1g-dev**               | compression library |
 | **libfreetype6-dev**, **libjpeg62-turbo-dev**, **libmcrypt-dev**, **libpng-dev** | simplify working with and on images |
 | **nodejs** + **npm**         | javascript development tools – LTS stream |
@@ -70,7 +69,9 @@ This image is customizable by these environmental variables:
 
 ## PHP Libraries installed
 
-**imap**, **pdo**, **pdo_mysql**, **imap**, **zip**, **gd**, **exif**, **mcrypt**
+**pdo**, **pdo_mysql**, **zip**, **gd**, **exif**, **mcrypt**
+
+*Due to `libc-client-dev` no longer being available in Debian Trixie but necessary for unmaintained `imap` PHP extension, it is recommended to rely on Userland PHP IMAP libraries.*
 
 ## PHP Modules enabled
 
