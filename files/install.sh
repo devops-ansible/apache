@@ -125,6 +125,7 @@ docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 docker-php-ext-configure calendar
 docker-php-ext-configure gd --with-freetype --with-jpeg
 docker-php-ext-install -j$( nproc ) \
+    bcmath \
     mysqli zip \
     pdo pdo_mysql pdo_sqlite \
     zip \
