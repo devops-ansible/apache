@@ -77,7 +77,8 @@ while IFS= read -r cur; do
         chmod a+x ${bootpath}
         for f in ${bootpath}; do
             echo "    ... running ${f}"
-            source "${f}"
+            # source "${f}"
+            bash -c "cd ${APACHE_WORKDIR} && . ${f}" "${f}"
             echo "    ... done with ${f}"
             echo
         done

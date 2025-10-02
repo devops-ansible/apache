@@ -20,12 +20,12 @@ fi
 ## install additional apache2 modules if defined
 ###
 
-if ! [ -z "$MODS" ] ; then
+if ! [ -z "${MODS}" ] ; then
     echo "Enabling mods defined in \$MODS ..."
-    for i in $MODS ; do
-        a2enmod $i
+    for i in ${MODS} ; do
+        a2enmod ${i}
         if [[ $? != 0 ]]; then
-            docker-php-ext-enable $i
+            docker-php-ext-enable ${i}
         fi
     done
 fi
@@ -45,9 +45,7 @@ fi
 ###
 ## php.ini enhancements
 ###
-if [ ! -z ${PHPINI+x} ] && [ "$PHPINI" != "" ]; then
-    initscript="/boot.d/inibuild.php"
-    chmod a+x ${initscript}
-    ${initscript} $PHPINI >> /usr/local/etc/php/conf.d/php_env.ini
+if [ ! -z ${PHPINI+x} ] && [ "${PHPINI}" != "" ]; then
+    echo "${PHPINI}" | jq -r 'to_entries | .[] | "\(.key) = \(.value)"' | tee /usr/local/etc/php/conf.d/php_env.ini
 fi
 
