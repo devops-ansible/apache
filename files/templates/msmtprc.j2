@@ -11,4 +11,8 @@ tls            on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt
 {% endif %}
 
+{% if SMTP_AUTH is defined %}
+auth          on
+{% endif %}
+
 syslog LOG_MAIL
