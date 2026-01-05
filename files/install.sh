@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euox pipefail
 
 # adjust executable rights and move files to correct places
 chmod a+x /boot.sh
@@ -128,7 +128,7 @@ docker-php-ext-install -j$( nproc ) \
     zip \
     exif \
     intl \
-    curl mbstring opcache \
+    curl mbstring \
     pgsql pdo_pgsql \
     calendar \
     ldap \
