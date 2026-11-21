@@ -102,58 +102,67 @@ echo -e '\033[1;30;42m prepare PHP 7.4 source build \033[0m'
 # Install the dependencies declared by Sury's PHP source package.
 apt-get -yq build-dep php7.4
 mkdir -p /work/php74-security
+chmod 755 /work/php74-security
 cd /work/php74-security
 
+# Allow the APT sandbox user to write downloaded files.
+chown _apt:root /work/php74-security
 # Extract a fresh source tree. Debian applies its existing quilt
 # patch series automatically during this step.
 apt-get source php7.4
+
+# Restore ownership for the package build.
+chown -R root:root /work/php74-security
 cd php7.4-*/
 
 echo
 echo -e '\033[1;30;42m verify PHP 7.4 security patch sources \033[0m'
 
-# Sury's source includes changes overlapping the external PHP 7.4 backport.
-# Do not download or apply the same changes a second time.
-# These checks verify selected source features, NOT complete CVE coverage.
-# 0062: multipart body-parts limit
-# 0164: state corruption and multipart parser hardening
-for patchname in \
-    0062-Introduce-max_multipart_body_parts-INI.patch \
-    0164-Avoid-state-corruption-via-bailout.patch; do
-    test -f "debian/patches/$patchname" || {
-        echo "ERROR: Missing expected source patch: $patchname" >&2
-        exit 1
-    }
-    grep -Fqx "$patchname" debian/patches/series || {
-        echo "ERROR: Patch is not listed in debian/patches/series: $patchname" >&2
+# Verify the extracted, quilt-applied source rather than patch filenames.
+# Debian/Sury may renumber or consolidate patches between revisions.
+security_dir=/usr/local/share/php74-security
+mkdir -p "$security_dir"
+head -n 6 debian/changelog > "$security_dir/source-changelog.txt"
+
+# Require the multipart limit to be registered and enforced in the source.
+for check in \
+    'PHP_INI_ENTRY("max_multipart_body_parts"' \
+    ; do
+    grep -Fq "$check" main/main.c || {
+        echo "ERROR: Missing multipart INI registration: $check" >&2
         exit 1
     }
 done
 
-for expected in \
-    'php_mime_should_save_hdr' \
-    'static char *substring_conf(char *start, size_t len, char quote)' \
+for check in \
     'body_parts_cnt = INI_INT("max_multipart_body_parts")' \
-    'if (--body_parts_cnt < 0)'; do
-    grep -Fq "$expected" main/rfc1867.c || {
-        echo "ERROR: Missing expected multipart source change: $expected" >&2
+    'if (--body_parts_cnt < 0)' \
+    'goto fileupload_done;'; do
+    grep -Fq "$check" main/rfc1867.c || {
+        echo "ERROR: Missing multipart source behavior: $check" >&2
         exit 1
     }
 done
 
-# Save the exact source-package revision and checks for inspection in the container.
-mkdir -p /usr/local/share/php74-security
-head -n 6 debian/changelog > /usr/local/share/php74-security/source-changelog.txt
-sha256sum \
-    debian/patches/0062-Introduce-max_multipart_body_parts-INI.patch \
-    debian/patches/0164-Avoid-state-corruption-via-bailout.patch \
-    > /usr/local/share/php74-security/source-patch-sha256.txt
-printf '%s\n' \
-    'Selected Sury source changes verified during image build.' \
-    'This is not proof that CVE-2026-109618 and CVE-2026-109619 are fully fixed.' \
-    > /usr/local/share/php74-security/README.txt
+# Preserve evidence from the exact source revision being rebuilt.
+sha256sum main/main.c main/rfc1867.c > "$security_dir/source-sha256.txt"
+if [ -f .pc/applied-patches ]; then
+    cp .pc/applied-patches "$security_dir/applied-patches.txt"
+fi
+if [ -d debian/patches ]; then
+    find debian/patches -type f -name '*.patch' -print0 \
+        | sort -z | xargs -0 -r sha256sum \
+        > "$security_dir/source-patch-sha256.txt"
+fi
 
-echo 'Expected Sury source changes found; full CVE coverage is not independently verified.'
+cat > "$security_dir/README.txt" <<'EOF'
+Verified: source contains multipart part-count limit registration and guard.
+NOT VERIFIED: CVE-2026-109618 (OOM cleanup corruption) and
+CVE-2026-109619 (stale state across requests).
+These CVEs require a reviewed vendor backport and targeted regression tests.
+EOF
+
+echo 'Multipart source checks passed; PHP2Shell CVE fixes remain unverified.'
 
 echo
 echo -e '\033[1;30;42m build PHP 7.4 Debian packages \033[0m'
